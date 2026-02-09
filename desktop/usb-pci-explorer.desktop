@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=USB-PCI Explorer
+GenericName=System Hardware Explorer
+Comment=Correlate USB topology to PCI controllers
+Exec=usb-pci-explorer
+Icon=usb-pci-explorer
+Terminal=false
+Type=Application
+Categories=System;Monitor;Qt;
+Keywords=USB;PCI;Hardware;Topology;RunikSystems;

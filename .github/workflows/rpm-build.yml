@@ -1,0 +1,51 @@
+name: Build and Release RPM
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  rpm-build:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+
+    steps:
+      - name: Install build dependencies
+        run: |
+          dnf install -y gcc-c++ cmake qt6-qtbase-devel rpm-build rpmdevtools tar gzip usbutils pciutils gtest-devel
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Prepare Clean Source Archive
+        run: |
+          mkdir -p rpmbuild/SOURCES
+
+          VERSION=${GITHUB_REF_NAME#v}
+
+          tar --exclude-vcs \
+              --exclude='./.github' \
+              --exclude='./.github/*' \
+              --exclude='./.gitignore' \
+              --exclude='./build' \
+              --exclude='./rpmbuild' \
+              --transform "s|^|usb-pci-explorer-${VERSION}/|" \
+              -czvf rpmbuild/SOURCES/usb-pci-explorer-${VERSION}.tar.gz .
+
+      - name: Build RPM
+        run: |
+          rpmbuild -ba packaging/usb-pci-explorer.spec --define "_topdir $(pwd)/rpmbuild"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            rpmbuild/RPMS/x86_64/*.rpm
+            rpmbuild/SRPMS/*.src.rpm
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

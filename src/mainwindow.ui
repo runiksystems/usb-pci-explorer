@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Explorateur USB vers PCI</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <!-- Layout vertical pour organiser les widgets -->
+   <layout class="QVBoxLayout" name="verticalLayout">
+
+    <!-- Notre tableau de données -->
+    <item>
+     <widget class="QTableWidget" name="tableWidget">
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <!-- On définit 4 colonnes par défaut -->
+      <column>
+       <property name="text">
+        <string>Bus</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>PCI</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Pilote</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Périphériques</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+
+    <!-- Notre bouton de rafraîchissement -->
+    <item>
+     <widget class="QPushButton" name="btnScan">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Lancer l'analyse du matériel</string>
+      </property>
+     </widget>
+    </item>
+
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
